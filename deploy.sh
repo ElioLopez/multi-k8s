@@ -1,15 +1,15 @@
-docker build -t ElioLopez/multi-client:latest -t ElioLopez/multi-client:$SHA -f ./client/Dockerfile ./client
-docker build -t ElioLopez/multi-server:latest -t ElioLopez/multi-server:$SHA -f ./server/Dockerfile ./server
-docker build -t ElioLopez/multi-worker:latest -t ElioLopez/multi-worker:$SHA -f ./worker/Dockerfile ./worker
-docker push ElioLopez/multi-client:latest
-docker push ElioLopez/multi-server:latest
-docker push ElioLopez/multi-worker:latest
+docker build -t eliolopez/multi-client:latest -t eliolopez/multi-client:$SHA -f ./client/Dockerfile ./client
+docker build -t eliolopez/multi-server:latest -t eliolopez/multi-server:$SHA -f ./server/Dockerfile ./server
+docker build -t eliolopez/multi-worker:latest -t eliolopez/multi-worker:$SHA -f ./worker/Dockerfile ./worker
+docker push eliolopez/multi-client:latest
+docker push eliolopez/multi-server:latest
+docker push eliolopez/multi-worker:latest
 
-docker push ElioLopez/multi-client:$SHA
-docker push ElioLopez/multi-server:$SHA
-docker push ElioLopez/multi-worker:$SHA
+docker push eliolopez/multi-client:$SHA
+docker push eliolopez/multi-server:$SHA
+docker push eliolopez/multi-worker:$SHA
 
 kubectl apply -f k8s
-kubectl set image deployments/server-deployment server=ElioLopez/multi-server:$SHA
-kubectl set image deployments/client-deployment client=ElioLopez/multi-client:$SHA
-kubectl set image deployments/worker-deployment worker=ElioLopez/multi-worker:$SHA
+kubectl set image deployments/server-deployment server=eliolopez/multi-server:$SHA
+kubectl set image deployments/client-deployment client=eliolopez/multi-client:$SHA
+kubectl set image deployments/worker-deployment worker=eliolopez/multi-worker:$SHA
