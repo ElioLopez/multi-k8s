@@ -5,20 +5,19 @@ env:
   global:
   - SHA=$(git rev-parse HEAD)
   - CLOUDSDK_CORE_DISABLE_PROMPTS=1
-  - openssl aes-256-cbc -K $encrypted_fb3b24374b16_key -iv $encrypted_fb3b24374b16_iv -in service-account.json.enc -out service-account.json -d
 before_install:
-- secure: sVWeLtR3cW8279r74UOAozeGgWhk++cScuDfjvuPJTDmK0EWCUAqmdvuU8EEAbbl7tYa+FY4u1kGSlcXJk+kUKVftJ/+t+7/vaRPtS7et0KcoGedwg/Kb/lJIHGP2TdNheZckwC3lUBi/EiGQOv/d/5+imBg0l5bU3fcWVEQl5z2PblVENkCtu7BGBifylRcnkifjfBxuEUilLTKNqc1/ctpiH2UwHBaMPGxOkowmVqiq9lYtpfkKbVC/OCVPpfddubmgI1oQCe6nWUEtkUxeu77o0poyC4FA2lS/yuylIbNPNawZF3diF6+RlpBuf7RWr9GVVNQwRxeoYY0zxS5tpPYdWZLYlYnzLEe0VUQrUGReRkTFx/z4bQ2iqmXnILQRLtz1OCtrf9bTzYEMM3zbnPQhYGS4LJHy7am6jSRELbPo6RFiZGS9k8EcpBZaZaoRiZomGoJF0XwSbk2b/vtkFfrbON9DWaUw2D4/W5yGLnQV1I3gcsHbuY4o0aIE6pvxNiA0ALkGmxPIPCJNkHCqM7ARCj8LZ+5U6HM+qMlJwu8EY41CfV/KXepnfXZcO0WC1wUqC+omGl8lHt2AEoj6SPbVNNatPR57WsAOfFf7EQx0RqCM8TZp0vlRWwrcK6wix5L1XNVrM6rZ+7TKm4kOXa4FrNiW5XKPReMl7hKi4o=
-- curl https://sdk.cloud.google.com | bash > /dev/null;
-- source $HOME/google-cloud-sdk/path.bash.inc
-- gcloud components update kubectl
-- gcloud auth activate-service-account --key-file service-account.json
-- gcloud config set project muti-k8s-253418
-- gcloud config set compute/zone us-central1-a
-- gcloud container clusters get-credentials multi-cluster
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-- docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
-script:
-- docker run stephengrider/react-test npm test -- --converage
+  - openssl aes-256-cbc -K $encrypted_fb3b24374b16_key -iv $encrypted_fb3b24374b16_iv -in service-account.json.enc -out service-account.json -d
+  - curl https://sdk.cloud.google.com | bash > /dev/null;
+  - source $HOME/google-cloud-sdk/path.bash.inc
+  - gcloud components update kubectl
+  - gcloud auth activate-service-account --key-file service-account.json
+  - gcloud config set project muti-k8s-253418
+  - gcloud config set compute/zone us-central1-a
+  - gcloud container clusters get-credentials multi-cluster
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
+script: 
+  - docker run stephengrider/react-test npm test -- --converage
 deploy:
   provider: script
   script: bash ./deploy.sh
