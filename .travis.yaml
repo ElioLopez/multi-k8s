@@ -17,7 +17,7 @@ env:
   - docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
 
   script:
-   - docker run -e stephengrider/react-test npm test -- --converage
+   - docker run stephengrider/react-test npm test -- --converage
   
   deploy:
     provider: script
