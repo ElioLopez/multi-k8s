@@ -13,12 +13,11 @@ env:
   - gcloud auth activate-service-account --key-file service-account.json
   - gcloud config set project muti-k8s-253418
   - gcloud config ser compute/sone us-central1-a
-  - gcloud container clusters get-credentials multi-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin	
-  - docker build -t ElioLopez/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
 
   script:
-   - docker run -e ElioLopez/react-test npm test -- --converage
+   - docker run -e stephengrider/react-test npm test -- --converage
   
   deploy:
     provider: script
